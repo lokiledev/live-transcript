@@ -1,0 +1,59 @@
+# Print stays allowed: the terminal is the user interface.
+
+line-length = 100
+src = ["src", "tests"]
+target-version = "py312"
+
+[lint]
+preview = true
+explicit-preview-rules = true
+select = [
+  "ANN",
+  "ASYNC",
+  "B",
+  "D",
+  "E",
+  "F",
+  "G",
+  "I",
+  "ICN",
+  "INP",
+  "N",
+  "PGH",
+  "PIE",
+  "PLC0414",
+  "PLC0415",
+  "PLR0402",
+  "RUF",
+  "SLF",
+  "T100",
+  "TID",
+  "UP",
+  "W",
+]
+ignore = [
+  "D100",
+  "D101",
+  "D102",
+  "D103",
+  "D104",
+  "D105",
+  "D106",
+  "D107",
+  "D417",
+  "E501",
+  "RUF001",
+  "RUF002",
+  "RUF003",
+]
+
+[lint.per-file-ignores]
+"src/live_transcript/native.py" = [
+  "E402", # Native libraries are imported after CUDA setup.
+]
+
+[lint.pydocstyle]
+convention = "google"
+
+[format]
+quote-style = "double"

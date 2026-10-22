@@ -1,0 +1,48 @@
+[project]
+name = "live-transcript"
+version = "0.1.0"
+description = "Live meeting transcript capture with speaker diarization"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+dependencies = [
+    "faster-whisper>=1.1.0",
+    "numpy>=2.0",
+    # CTranslate2 wheels link against CUDA 12 cuBLAS.
+    "nvidia-cublas-cu12>=12.4; sys_platform == 'linux'",
+    "sherpa-onnx>=1.12",
+    # The sherpa-onnx wheel needs this native library, which uv does not
+    # always pull in from the wheel metadata alone.
+    "sherpa-onnx-core>=1.12",
+]
+
+[project.scripts]
+lt = "live_transcript.cli:main"
+live-transcript = "live_transcript.cli:main"
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.6",
+    "pytest>=8",
+    "ruff>=0.15",
+    "ty>=0.0.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/live_transcript"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"src/live_transcript/py.typed" = "live_transcript/py.typed"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ty.environment]
+python-version = "3.14"
+
+[tool.ty.src]
+include = ["src", "tests"]
